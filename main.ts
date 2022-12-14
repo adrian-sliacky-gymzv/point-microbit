@@ -10,3 +10,7 @@ loops.everyInterval(500, function () {
     basic.clearScreen()
     led.plot(x, y)
 })
+
+basic.forever(function() {
+    if (input.buttonIsPressed(Button.AB)) {}
+})
