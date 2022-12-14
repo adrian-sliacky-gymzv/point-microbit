@@ -1,25 +1,20 @@
-# def on_forever():
-#     pass
-# basic.forever(on_forever)
 x = 0
 y = 0
-def tick():
+
+def onEvery_interval():
     global x, y
     if input.button_is_pressed(Button.A):
-        if x > 0:
-            led.unplot(x-1, y)
+        if x >= 5:
+            x = 0
+        basic.clear_screen()
         led.plot(x, y)
-        x = x + 1
-    else:
-        led.unplot(x, y)
-
+        x += 1
     if input.button_is_pressed(Button.B):
-        if y > 0:
-            led.unplot(x, y-1)
+        if y >= 5:
+            y = 0
+        basic.clear_screen()
         led.plot(x, y)
-        y = y + 1
-    else:
-        led.unplot(x, y)
-    # basic.pause(100)
-
-loops.every_interval(500, tick)
+        y += 1
+    print(x)
+    print(y)
+loops.every_interval(500, onEvery_interval)
