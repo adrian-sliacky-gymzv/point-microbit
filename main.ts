@@ -8,7 +8,7 @@ const startY = 0 // starting vertical position
 
 const delay = 500 // delay in milliseconds
 const buttonsSwapped = false
-const controlsSwapped = true
+const controlsSwapped = false
 
 // how to plot leds
 const blink = false

@@ -1,4 +1,4 @@
-# A point, microbit
+# A point on Microbit
 
 <!-- 
 > Open this page at [https://adrian-sliacky-gymzv.github.io/point-microbit/](https://adrian-sliacky-gymzv.github.io/point-microbit/)
