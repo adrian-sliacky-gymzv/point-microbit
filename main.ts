@@ -1,7 +1,12 @@
+// ############################################
+
 // change any of these variables below to your liking!
+const useGyro = true
+
 let x = 0 // starting horizontal position
 let y = 0 // starting vertical position
-const delayMs = 500
+
+const delay = 500 // delay in milliseconds
 const buttonsSwapped = false
 
 // how to plot leds
@@ -18,14 +23,36 @@ if (buttonsSwapped) {
     button2 = Button.A
 }
 
-loops.everyInterval(delayMs, function () {
-    if (input.buttonIsPressed(button1)) {
-        x = (x + 1) % 5
+input.onButtonPressed(Button.AB, function () {
+    if (useGyro) {
+        basic.clearScreen()
     }
-    if (input.buttonIsPressed(button2)) {
-        y = (y + 1) % 5
-    }
+})
 
+const debug = false
+
+const main = () => {
+    if (useGyro) {
+        if (input.isGesture(Gesture.TiltLeft)) {
+            x = (x - 1) % 5
+        }
+        if (input.isGesture(Gesture.TiltRight)) {
+            x = (x + 1) % 5
+        }
+        if (input.isGesture(Gesture.LogoUp)) {
+            y = (y + 1) % 5
+        }
+        if (input.isGesture(Gesture.LogoDown)) {
+            y = (y - 1) % 5
+        }
+    } else {
+        if (input.buttonIsPressed(button1)) {
+            x = (x + 1) % 5
+        }
+        if (input.buttonIsPressed(button2)) {
+            y = (y + 1) % 5
+        }
+    }
     if (blink) {
         if (reversed) {
             basic.showLeds(`
@@ -53,16 +80,16 @@ loops.everyInterval(delayMs, function () {
                 led.plot(i, j)
             }
         }
-
         led.unplot(x, y)
     } else {
         basic.clearScreen()
         led.plot(x, y)
     }
-    console.log({
-        x,
-        y
-    })
-})
+    if (debug) {
+        console.log({x, y})
+    }
+}
+
+loops.everyInterval(delay, main)
 
 if (input.buttonIsPressed(Button.AB)) { } // for initializing A + B button in makecode Simulator
