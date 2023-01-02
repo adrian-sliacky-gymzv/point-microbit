@@ -1,19 +1,23 @@
 // ############################################
 
-// change any of these variables below to your liking!
+// change any of these constants below to your liking!
 const useGyro = true
 
-let x = 0 // starting horizontal position
-let y = 0 // starting vertical position
+const startX = 0 // starting horizontal position
+const startY = 0 // starting vertical position
 
 const delay = 500 // delay in milliseconds
 const buttonsSwapped = false
+const controlsSwapped = true
 
 // how to plot leds
 const blink = false
 const reversed = false
 
 // ############################################
+
+let x = startX
+let y = startY
 
 let button1 = Button.A
 let button2 = Button.B
@@ -23,54 +27,62 @@ if (buttonsSwapped) {
     button2 = Button.A
 }
 
-input.onButtonPressed(Button.AB, function () {
+input.onButtonPressed(Button.AB, () => {
     if (useGyro) {
         basic.clearScreen()
+        x = startX
+        y = startY
     }
 })
 
-const debug = false
+let increment = 1
+if (controlsSwapped) {
+    increment = -1
+}
 
-const main = () => {
+const mod = (a: number, b: number) => ((a % b) + b) % b
+
+
+loops.everyInterval(delay, () => {
     if (useGyro) {
         if (input.isGesture(Gesture.TiltLeft)) {
-            x = (x - 1) % 5
+            x = mod(x - increment, 5)
         }
         if (input.isGesture(Gesture.TiltRight)) {
-            x = (x + 1) % 5
+            x = mod(x + increment, 5)
         }
         if (input.isGesture(Gesture.LogoUp)) {
-            y = (y + 1) % 5
+            y = mod(y + increment, 5)
         }
         if (input.isGesture(Gesture.LogoDown)) {
-            y = (y - 1) % 5
+            y = mod(y - increment, 5)
         }
     } else {
         if (input.buttonIsPressed(button1)) {
-            x = (x + 1) % 5
+            x = mod(x + increment, 5)
         }
         if (input.buttonIsPressed(button2)) {
-            y = (y + 1) % 5
+            y = mod(y + increment, 5)
         }
     }
     if (blink) {
         if (reversed) {
             basic.showLeds(`
-            # # # # #
-            # # # # #
-            # # # # #
-            # # # # #
-            # # # # #
-            `)
+        # # # # #
+        # # # # #
+        # # # # #
+        # # # # #
+        # # # # #
+        `)
             led.unplot(x, y)
         } else {
             basic.showLeds(`
-            . . . . .
-            . . . . .
-            . . . . .
-            . . . . .
-            . . . . .
-            `)
+        . . . . .
+        . . . . .
+        . . . . .
+        . . . . .
+        . . . . .
+        `)
             led.plot(x, y)
         }
     }
@@ -85,11 +97,6 @@ const main = () => {
         basic.clearScreen()
         led.plot(x, y)
     }
-    if (debug) {
-        console.log({x, y})
-    }
-}
-
-loops.everyInterval(delay, main)
+})
 
 if (input.buttonIsPressed(Button.AB)) { } // for initializing A + B button in makecode Simulator
