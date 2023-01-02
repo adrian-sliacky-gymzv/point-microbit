@@ -1,15 +1,28 @@
-// change any of these below variables to your liking!
-let x = 0 // denotes horizontal position
-let y = 0 // denotes vertical position
-const delay_ms = 500
+// change any of these variables below to your liking!
+let x = 0 // starting horizontal position
+let y = 0 // starting vertical position
+const delayMs = 500
+const buttonsSwapped = false
+
+// how to plot leds
 const blink = false
 const reversed = false
 
-loops.everyInterval(delay_ms, function () {
-    if (input.buttonIsPressed(Button.A)) {
+// ############################################
+
+let button1 = Button.A
+let button2 = Button.B
+
+if (buttonsSwapped) {
+    button1 = Button.B
+    button2 = Button.A
+}
+
+loops.everyInterval(delayMs, function () {
+    if (input.buttonIsPressed(button1)) {
         x = (x + 1) % 5
     }
-    if (input.buttonIsPressed(Button.B)) {
+    if (input.buttonIsPressed(button2)) {
         y = (y + 1) % 5
     }
 
@@ -46,6 +59,10 @@ loops.everyInterval(delay_ms, function () {
         basic.clearScreen()
         led.plot(x, y)
     }
+    console.log({
+        x,
+        y
+    })
 })
 
-if (input.buttonIsPressed(Button.AB)) { } // for initializing A+B button in makecode Simulator
+if (input.buttonIsPressed(Button.AB)) { } // for initializing A + B button in makecode Simulator
