@@ -2,11 +2,12 @@
 
 // change any of these constants below to your liking!
 const useGyro = true
+const ledOverflow = false
 
 const startX = 0 // starting horizontal position
 const startY = 0 // starting vertical position
 
-const delay = 500 // delay in milliseconds
+const delay = 200 // delay in milliseconds
 const buttonsSwapped = false
 const controlsSwapped = false
 
@@ -40,7 +41,7 @@ if (controlsSwapped) {
     increment = -1
 }
 
-const mod = (a: number, b: number) => ((a % b) + b) % b
+const mod = (a: number, b: number) => ledOverflow ? ((a % b) + b) % b : Math.max(Math.min(a, 4), 0)
 
 
 loops.everyInterval(delay, () => {
