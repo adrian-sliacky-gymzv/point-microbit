@@ -2,7 +2,7 @@
 
 // change any of these constants below to your liking!
 const useGyro = true
-const ledOverflow = false
+const ledOverflow = true
 
 const startX = 0 // starting horizontal position
 const startY = 0 // starting vertical position
